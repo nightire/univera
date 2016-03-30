@@ -8,4 +8,4 @@ export default (options) => `
 </head>
 <body>${options.content}</body>
 </html>
-`.replace(/(^\s+)|(\n)/gm, '');
+`.replace(/(^\s+)|(\r\n)/gm, '');
