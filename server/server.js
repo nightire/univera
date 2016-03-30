@@ -16,7 +16,7 @@ server.use(require('./middlewares/response-time')());
 
 server.use(require('koa-favicon')(resolve(root, 'public', 'favicon.ico')));
 
-server.use(router.routes()).use(router.allowedMethods());
+server.use(router.routes());
 
 export default server.listen(server.port, function() {
   console.info(`[${server.name}] => http://localhost:${server.port}`);

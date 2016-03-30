@@ -4,8 +4,6 @@ import about from './about';
 
 const router = new Router();
 
-router.get('home', '/', home);
-
-router.get('about', '/about', about);
+router.use('', router.allowedMethods(), home.routes(), about.routes());
 
 export default router;

@@ -1,6 +1,9 @@
+import Router from 'koa-router';
 import htmlTemplate from '../../../common/templates/index';
 
-export default async (context, next) => {
+const about = new Router();
+
+async function route(context, next) {
   context.body = htmlTemplate({
     title: `${process.env.npm_package_name} - About`,
     content: `
@@ -9,4 +12,6 @@ export default async (context, next) => {
     `
   });
   await next();
-};
+}
+
+export default about.get('about', '/about', route);
