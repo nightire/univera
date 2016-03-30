@@ -1,23 +1,23 @@
 /* eslint-disable no-console */
-const Koa = require('koa');
-const server = new Koa();
-const path = require('path');
+import Koa from 'koa';
+import {resolve} from 'path';
 
+export const root = resolve(__dirname, '..');
+export const env = process.env.NODE_ENV || 'development';
+
+const server = new Koa();
 server.port = process.env.PORT || 3000;
 server.name = process.env.npm_package_name || 'univera';
 
-if (process.env.NODE_ENV === 'development') {
-  server.use(require('koa-logger')());
-}
+if ('production' != env) server.use(require('koa-logger')());
 
 server.use(require('./middlewares/response-time')());
 
-const favicon = path.join(__dirname, '..', 'public', 'favicon.ico');
-server.use(require('koa-favicon')(favicon));
+server.use(require('koa-favicon')(resolve(root, 'public', 'favicon.ico')));
 
 const ssrOptions = {title: server.name};
 server.use(require('./middlewares/server-side-rendering')(ssrOptions));
 
-exports.app = server.listen(server.port, function() {
+export default server.listen(server.port, function() {
   console.info(`[${server.name}] => http://localhost:${server.port}`);
 });

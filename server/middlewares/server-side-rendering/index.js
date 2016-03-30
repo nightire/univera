@@ -1,16 +1,13 @@
-module.exports = serverSideRendering;
+module.exports = (options) => async (context, next) => {
+  context.body = htmlTemplate(options);
+  await next();
+};
 
-function serverSideRendering(options) {
-  return async function ssr(context, next) {
-    context.body = htmlTemplate(options);
-    await next();
+const htmlTemplate = (
+  options = {
+    title: 'untitled'
   }
-}
-
-function htmlTemplate(options = {
-  title: 'untitled'
-}) {
-  return `
+) => `
     <!DOCTYPE html>
     <html>
     <head>
@@ -22,4 +19,3 @@ function htmlTemplate(options = {
     </body>
     </html>
   `.replace(/(^\s+)|(\n)/gm, '');
-}
