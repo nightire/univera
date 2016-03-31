@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import htmlTemplate from '../../../common/templates/index';
+import htmlTemplate from '../../views';
 
 const about = new Router();
 
