@@ -1,5 +1,4 @@
 {
-  "exec": "node server",
   "watch": ["server"],
   "verbose": false
 }
