@@ -23,7 +23,9 @@
     "koa": "^2.0.0",
     "koa-compress": "^2.0.0",
     "koa-favicon": "^2.0.0",
-    "koa-router": "^7.0.1"
+    "koa-router": "^7.0.1",
+    "mysql2": "^1.0.0-rc.1",
+    "sequelize": "^3.20.0"
   },
   "devDependencies": {
     "babel-cli": "^6.6.5",
@@ -38,11 +40,13 @@
     "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
     "babel-register": "^6.7.2",
     "cross-env": "^1.0.7",
-    "devtool": "^1.9.1",
     "eslint": "^2.5.3",
     "koa-logger": "^2.0.0",
     "nodemon": "^1.9.1",
     "pre-commit": "^1.1.2",
     "rimraf": "^2.5.2"
+  },
+  "optionalDependencies": {
+    "devtool": "^1.9.1"
   }
 }
