@@ -4,6 +4,6 @@ import about from './about';
 
 const router = new Router();
 
-router.use('', router.allowedMethods(), home.routes(), about.routes());
+router.use('', home.routes(), about.routes());
 
 export default router;

@@ -7,9 +7,13 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "cross-env NODE_ENV=development eslint server",
-    "start": "cross-env NODE_ENV=development nodemon",
-    "build": "cross-env NODE_ENV=production babel server -s -d output"
+    "slate": "rimraf node_modules && npm install",
+    "start": "cross-env NODE_ENV=development nodemon --exec node server",
+    "test": "cross-env NODE_ENV=development eslint common/** server/**",
+    "clean": "rimraf output",
+    "build": "npm run clean && cross-env NODE_ENV=debug babel server -d output",
+    "debug": "npm run build && cross-env NODE_ENV=debug nodemon --exec devtool output --console",
+    "dist": "npm run clean && cross-env NODE_ENV=production babel server -d output -s"
   },
   "dependencies": {
     "koa": "^2.0.0",
@@ -20,6 +24,7 @@
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
     "babel-eslint": "^6.0.0",
+    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-transform-async-to-generator": "^6.7.4",
     "babel-plugin-transform-es2015-destructuring": "^6.6.5",
     "babel-plugin-transform-es2015-function-name": "^6.5.0",
@@ -28,8 +33,10 @@
     "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
     "babel-register": "^6.7.2",
     "cross-env": "^1.0.7",
+    "devtool": "^1.9.1",
     "eslint": "^2.5.3",
     "koa-logger": "^2.0.0",
-    "nodemon": "^1.9.1"
+    "nodemon": "^1.9.1",
+    "rimraf": "^2.5.2"
   }
 }

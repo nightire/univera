@@ -3,11 +3,13 @@ extends:
   - "eslint:recommended"
 parser: "babel-eslint"
 parserOptions:
-  sourceType: "module"
   ecmaVersion: 6
-  ecmaFeatures:
-    jsx: true
+  sourceType: "module"
 env:
+  es6: true
   node: true
   mocha: true
   browser: true
+rules:
+  comma-spacing: [warn, {before: false, after: true}]
+  comma-style: [warn, last, {exceptions: {VariableDeclaration: true}}]

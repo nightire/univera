@@ -1,5 +1,7 @@
 {
+  "sourceMaps": "inline",
   "plugins": [
+    "add-module-exports",
     "transform-async-to-generator",
     "transform-es2015-parameters",
     "transform-es2015-destructuring",
