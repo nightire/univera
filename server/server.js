@@ -20,6 +20,19 @@ server.use(require('koa-favicon')(resolve(root, 'public', 'favicon.ico')));
 
 server.use(require('./routes').routes());
 
+server.use(async (context, next) => {
+  context.status = 404;
+  context.body = require('../common/templates')({
+    title: `${server.name} - 404`,
+    content: `
+    <h1>404</h1>
+    <hr/>
+    <p>We can not found what you expected, <a href="/">Go Home</a> and try again.</p>
+    `
+  });
+  await next();
+});
+
 server.listen(server.port, function() {
   console.info(`[${server.name}] => http://localhost:${server.port}`);
 });
