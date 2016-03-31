@@ -9,12 +9,16 @@
   "scripts": {
     "slate": "rimraf node_modules && npm install",
     "start": "cross-env NODE_ENV=development nodemon --exec node server",
-    "test": "cross-env NODE_ENV=development eslint common/** server/**",
+    "lint": "cross-env NODE_ENV=development eslint common/** server/**",
+    "test": "npm run lint",
     "clean": "rimraf output",
     "build": "npm run clean && cross-env NODE_ENV=debug babel server -d output",
     "debug": "npm run build && cross-env NODE_ENV=debug nodemon --exec devtool output --console",
     "dist": "npm run clean && cross-env NODE_ENV=production babel server -d output -s"
   },
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "koa": "^2.0.0",
     "koa-favicon": "^2.0.0",
@@ -37,6 +41,7 @@
     "eslint": "^2.5.3",
     "koa-logger": "^2.0.0",
     "nodemon": "^1.9.1",
+    "pre-commit": "^1.1.2",
     "rimraf": "^2.5.2"
   }
 }
