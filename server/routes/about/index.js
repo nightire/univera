@@ -1,10 +1,9 @@
 import Router from 'koa-router';
-import htmlTemplate from '../../views';
 
 const about = new Router();
 
 async function route(context) {
-  context.body = htmlTemplate({
+  context.body = require('../../views')({
     title: `${process.env.NAME} - About`,
     content: `
     <h1>Univera - About Page</h1>

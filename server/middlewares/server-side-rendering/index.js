@@ -1,5 +1,3 @@
-import htmlTemplate from '../../views';
-
-module.exports = (options) => async context => {
-  context.body = htmlTemplate(options);
+export default options => async context => {
+  context.body = require('../../views/')(options);
 };
