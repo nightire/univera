@@ -1,11 +1,12 @@
-import Router from 'koa-router';
-import home from './home';
-import about from './about';
+import ssr from '../middlewares/server-side-render';
 
-const router = new Router();
+const router = require('koa-router')();
 
-router.use('', home.routes(), about.routes());
+router.all('ssr', '/(.*)', ssr.routeHandler({
+  content: `
+    <h1>Univera</h1>
+    <h2>An Universe Application Architecture</h2>
+  `
+}));
 
-router.all('/(.*)', require('./not-found'));
-
-export default router;
+export default router.routes();
