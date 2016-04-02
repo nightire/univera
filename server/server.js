@@ -7,13 +7,12 @@ import favicon from 'koa-favicon';
 import routes from './routes';
 
 export const root = path.join(__dirname, '..');
-export const env = process.env.NODE_ENV || 'development';
 
 const server = new Koa();
 server.port = process.env.PORT || 3000;
 server.name = process.env.NAME = process.env.npm_package_name;
 
-if ('production' !== env) server.use(logger());
+if ('production' !== server.env) server.use(logger());
 
 server.use(responseTime());
 
@@ -24,7 +23,10 @@ server.use(favicon(path.join(root, 'public', 'favicon.ico')));
 server.use(routes);
 
 server.listen(server.port, function() {
-  console.info(`[${server.name}] => http://localhost:${server.port}`);  // eslint-disable-line
+  /* eslint-disable no-console */
+  console.info(`
+               [${server.name}] => http://localhost:${server.port}
+               `.replace(/^\s*|\s*(\r?\n)+\s*$/gm, ''));
 });
 
 export default server;
