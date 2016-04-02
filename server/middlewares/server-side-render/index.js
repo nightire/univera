@@ -1,5 +1,7 @@
-import routeHandler from './route-handler';
+import ssrRouteHandler from './route-handler';
+import ssrTemplate from './template';
 
 export default {
-  routeHandler
+  ssrRouteHandler,
+  ssrTemplate
 };

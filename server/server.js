@@ -1,25 +1,30 @@
-/* eslint-disable no-console */
 import Koa from 'koa';
 import path from 'path';
-import pkg from '../package.json';
+import logger from 'koa-logger';
+import responseTime from './middlewares/response-time';
+import compress from 'koa-compress';
+import favicon from 'koa-favicon';
+import routes from './routes';
 
 export const root = path.join(__dirname, '..');
 export const env = process.env.NODE_ENV || 'development';
 
-const server = module.exports = new Koa();
+const server = new Koa();
 server.port = process.env.PORT || 3000;
-server.name = process.env.NAME = pkg.name;
+server.name = process.env.NAME = process.env.npm_package_name;
 
-if ('production' != env) server.use(require('koa-logger')());
+if ('production' !== env) server.use(logger());
 
-server.use(require('./middlewares/response-time')());
+server.use(responseTime());
 
-server.use(require('koa-compress')());
+server.use(compress());
 
-server.use(require('koa-favicon')(path.join(root, 'public', 'favicon.ico')));
+server.use(favicon(path.join(root, 'public', 'favicon.ico')));
 
-server.use(require('./routes'));
+server.use(routes);
 
 server.listen(server.port, function() {
-  console.info(`[${server.name}] => http://localhost:${server.port}`);
+  console.info(`[${server.name}] => http://localhost:${server.port}`);  // eslint-disable-line
 });
+
+export default server;
