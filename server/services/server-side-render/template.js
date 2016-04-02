@@ -34,7 +34,7 @@ const renderHTML = context => `
     ${context.meta}
   </head>
   <body>
-    <div id="react-root">${context.content || ''}</div>
+    ${context.content}
   </body>
   </html>
 `;

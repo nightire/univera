@@ -23,7 +23,7 @@ server.use(favicon(path.join(root, 'public', 'favicon.ico')));
 server.use(routes);
 
 server.listen(server.port, function() {
-  console.info(`[${server.name}] => http://localhost:${server.port}`); // eslint-disable line
+  console.info(`[${server.name}] => http://localhost:${server.port}`); // eslint-disable-line
 });
 
 export default server;

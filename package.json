@@ -9,7 +9,7 @@
   "scripts": {
     "slate": "rimraf node_modules && npm install",
     "start": "cross-env NODE_ENV=development nodemon --exec node server",
-    "lint": "cross-env NODE_ENV=development eslint common/** server/**",
+    "lint": "cross-env NODE_ENV=development eslint common/** server/** || true",
     "test": "npm run lint",
     "clean": "rimraf output",
     "debug": "cross-env NODE_ENV=debug nodemon",
@@ -24,6 +24,8 @@
     "koa-favicon": "^2.0.0",
     "koa-router": "^7.0.1",
     "mysql2": "^1.0.0-rc.1",
+    "react": "^15.0.0-rc.2",
+    "react-dom": "^15.0.0-rc.2",
     "sequelize": "^3.20.0"
   },
   "devDependencies": {
@@ -37,9 +39,11 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.7.4",
     "babel-plugin-transform-es2015-parameters": "^6.7.0",
     "babel-plugin-transform-es2015-shorthand-properties": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
     "babel-register": "^6.7.2",
     "cross-env": "^1.0.7",
     "eslint": "^2.5.3",
+    "eslint-plugin-react": "^4.2.3",
     "koa-logger": "^2.0.0",
     "nodemon": "^1.9.1",
     "pre-commit": "^1.1.2",

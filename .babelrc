@@ -1,4 +1,5 @@
 {
+  "presets": ["react"],
   "plugins": [
     "add-module-exports",
     "transform-async-to-generator",
