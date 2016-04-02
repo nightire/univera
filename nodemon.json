@@ -1,4 +1,5 @@
 {
+  "exec": "babel server -d output -s && devtool server --console --no-browser-globals --watch",
   "watch": ["server"],
   "verbose": false
 }

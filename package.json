@@ -12,9 +12,8 @@
     "lint": "cross-env NODE_ENV=development eslint common/** server/**",
     "test": "npm run lint",
     "clean": "rimraf output",
-    "build": "npm run clean && cross-env NODE_ENV=debug babel server -d output",
-    "debug": "npm run build && cross-env NODE_ENV=debug nodemon --exec devtool output --console",
-    "dist": "npm run clean && cross-env NODE_ENV=production babel server -d output -s"
+    "debug": "cross-env NODE_ENV=debug nodemon",
+    "build": "npm run clean && cross-env NODE_ENV=production babel server -d output -s"
   },
   "pre-commit": [
     "lint"
