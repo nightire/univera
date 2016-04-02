@@ -1,6 +1,6 @@
 import Router from 'koa-router';
-import extractLanguage from '../middlewares/extract-language';
-import {ssrRouteHandler} from '../middlewares/server-side-render';
+import extractLanguage from '../services/extract-language';
+import {ssrRouteHandler} from '../services/server-side-render';
 
 const router = new Router();
 

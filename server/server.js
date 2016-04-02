@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import path from 'path';
 import logger from 'koa-logger';
-import responseTime from './middlewares/response-time';
+import responseTime from './services/response-time';
 import compress from 'koa-compress';
 import favicon from 'koa-favicon';
 import routes from './routes';
@@ -23,10 +23,7 @@ server.use(favicon(path.join(root, 'public', 'favicon.ico')));
 server.use(routes);
 
 server.listen(server.port, function() {
-  /* eslint-disable no-console */
-  console.info(`
-               [${server.name}] => http://localhost:${server.port}
-               `.replace(/^\s*|\s*(\r?\n)+\s*$/gm, ''));
+  console.info(`[${server.name}] => http://localhost:${server.port}`); // eslint-disable line
 });
 
 export default server;
