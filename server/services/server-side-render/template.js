@@ -21,13 +21,13 @@ export default function ssrTemplate(options) {
   }, options);
 
   return context.compact
-    ? renderHTML(context).replace(/^\s+|\s*(\r?\n)+\s*/gm, '')
+    ? renderHTML(context).replace(/^\s+|\s*\r?\n+/gm, '')
     : renderHTML(context).replace(/^\s+/gm, '');
 }
 
 const renderHTML = context => `
   <!DOCTYPE html>
-  <html lang=${context.language}>
+  <html lang="${context.language}">
   <head>
     <meta charset="${context.charset}"/>
     <title>${context.name}</title>
