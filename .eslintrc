@@ -2,12 +2,12 @@
 extends:
   - eslint:recommended
   - plugin:react/recommended
-parser: "babel-eslint"
+parser: babel-eslint
 parserOptions:
   ecmaVersion: 6
   ecmaFeatures:
     jsx: true
-  sourceType: "module"
+  sourceType: module
 env:
   es6: true
   node: true
@@ -16,6 +16,7 @@ env:
 plugins:
   - react
 rules:
+  comma-dangle: [warn, only-multiline]
   comma-spacing: [warn, {before: false, after: true}]
   comma-style: [warn, last, {exceptions: {VariableDeclaration: true}}]
 

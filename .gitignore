@@ -3,6 +3,8 @@
 .imdone/
 .vscode/
 
-output/
 node_modules/
+output/
+public/assets/
+
 npm-debug*

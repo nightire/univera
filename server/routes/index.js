@@ -7,8 +7,8 @@ import App from '../../common/App';
 
 const router = new Router();
 const ssr = ssrRouteHandler({
-  content: renderToStaticMarkup(<App name="Univera"/>)
-  // content: `<div id="react-root">${renderToString(<App name="Univera"/>)}</div>`
+  // content: renderToStaticMarkup(<App name="Univera"/>)
+  content: `<div id="react-root">${renderToString(<App name="Univera"/>)}</div>`
 });
 
 router.get('ssr', '/');

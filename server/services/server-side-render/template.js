@@ -21,7 +21,7 @@ export default function ssrTemplate(options) {
   }, options);
 
   return context.compact
-    ? renderHTML(context).replace(/^\s+|\s*\r?\n+/gm, '')
+    ? renderHTML(context).replace(/^\s+|\s*(?:\r?\n)+/gm, '')
     : renderHTML(context).replace(/^\s+/gm, '');
 }
 
@@ -35,6 +35,8 @@ const renderHTML = context => `
   </head>
   <body>
     ${context.content}
+    <script src="/assets/vendor.js"></script>
+    <script src="/assets/client.js"></script>
   </body>
   </html>
 `;
