@@ -1,9 +1,9 @@
 import Koa from 'koa';
 import path from 'path';
+import serveStatic from 'koa-static';
 import responseTime from './services/response-time';
 import compress from 'koa-compress';
-import favicon from 'koa-favicon';
-import serveStatic from 'koa-static';
+import favicon from './services/favicon';
 import routes from './routes';
 
 export const root = path.join(__dirname, '..');

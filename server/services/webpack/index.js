@@ -7,7 +7,7 @@ export default (compiler, publicPath, options = {}) => {
   options = Object.assign({}, {publicPath, stats}, options);
   const middleware = webpackDevMiddleware(compiler, options);
 
-  return async (context, next) => {
+  return async function webpackDevMiddleware(context, next) {
     const hasNext = await applyMiddleware(middleware, context.req, {
       send: content => context.body = content,
       setHeader: function() {context.set.apply(context, arguments)}
