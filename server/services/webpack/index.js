@@ -1,7 +1,7 @@
 import webpackDevMiddleware from 'webpack-dev-middleware';
 
 // TODO: extract stats out as individual configuration.
-const stats = {chunkModules: false, colors: 'debug' != process.env.NODE_ENV};
+const stats = {chunkModules: false, colors: false};
 
 export default (compiler, publicPath, options = {}) => {
   options = Object.assign({}, {publicPath, stats}, options);

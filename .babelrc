@@ -1,16 +1,4 @@
 {
-  "presets": ["react"],
-  "plugins": [
-    "add-module-exports",
-    "transform-export-extensions",
-    "transform-object-rest-spread",
-    "transform-es2015-parameters",
-    "transform-es2015-destructuring",
-    "transform-es2015-shorthand-properties",
-    "transform-es2015-function-name",
-    "transform-es2015-modules-commonjs", ["transform-async-to-module-method", {
-      "module": "bluebird",
-      "method": "coroutine"
-    }]
-  ]
+  "presets": ["es2015", "stage-0", "react"],
+  "plugins": ["add-module-exports"]
 }

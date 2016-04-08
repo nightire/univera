@@ -1,12 +1,5 @@
+/* eslint-disable no-console */
 import Koa from 'koa';
-import path from 'path';
-import serveStatic from 'koa-static';
-import responseTime from './services/response-time';
-import compress from 'koa-compress';
-import favicon from './services/favicon';
-import routes from './routes';
-
-export const root = path.join(__dirname, '..');
 
 const server = new Koa();
 server.port = process.env.PORT || 3000;
@@ -15,24 +8,34 @@ server.name = process.env.NAME = require('../package.json').name;
 if ('production' != server.env) {
   server.use(require('koa-logger')());
 
-  const webpackConfig = require('../config/webpack.babel.js');
+  const webpackConfig = require('../config/webpack.babel');
   const compiler = require('webpack')(webpackConfig);
   const {publicPath} = webpackConfig.output;
   server.use(require('./services/webpack')(compiler, publicPath));
-} else {
-  server.use(serveStatic(path.join(root, 'public')));
+
+  require('dns').lookup(
+    require('os').hostname(), (err, address) => {server.address = address}
+  );
+
+  require('localtunnel')(
+    server.port, {subdomain: server.name}, (error, tunnel) => {
+      error && console.error(error);
+
+      console.info(`💻 本地地址：http://localhost:${server.port}`);
+      console.info(`🚧 内网地址：http://${server.address}:${server.port}`);
+      console.info(`🌏 外网地址：${tunnel.url}`);
+    }
+  );
 }
 
-server.use(responseTime());
+server.use(require('./services/response-time')());
 
-server.use(compress());
+server.use(require('koa-compress')());
 
-server.use(favicon(path.join(root, 'public', 'favicon.ico')));
+server.use(require('koa-static')('public', {maxage: 604800000, defer: true}));
 
-server.use(routes);
+server.use(require('./services/favicon')('public/favicon.ico'));
 
-server.listen(server.port, () => {
-  console.info(`[${server.name}] ☞ http://localhost:${server.port}`); // eslint-disable-line
-});
+server.use(require('./routes'));
 
-export default server;
+server.listen(server.port);

@@ -1,42 +1,37 @@
 import path from 'path';
 import webpack from 'webpack';
-import NpmInstallPlugin from 'npm-install-webpack-plugin';
 
 const debug = 'debug' == process.env.NODE_ENV;
 const final = 'production' == process.env.NODE_ENV;
 
 const defaults = {
   context: process.cwd(),
-  devtool: final ? '#srouce-map' : '#cheap-module-eval-source-map',
+  bail: !final,
+  debug: !final,
+  devtool: final ? '#srouce-map' : '#cheap-module-inline-source-map',
   module: {
     preLoaders: [
-      {test: /\.jsx?$/i, include: /client|common|server/, loader: 'eslint'},
+      {test: /\.jsx?$/, include: /client|common/, loader: 'eslint'},
     ],
     loaders: [
-      {test: /\.json$/i, include: /client|common|server/, loader: 'json'},
-      {test: /\.jsx?$/i, include: /client|common|server/, loader: 'babel?cacheDirectory'},
+      {test: /\.jsx?$/, include: /client|common/, loader: 'babel?cacheDirectory'},
+      {test: /\.(?:gif|jpe?g|png|svg)$/, include: /public/, loader: 'file?name=images/[name].[ext]'}
     ],
   },
   resolve: {
     extensions: ['', '.js', '.json', '.jsx'],
-    modulesDirectories: ["node_modules"],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: `vendor${final ? '.[hash]' : ''}.js`,
-    }),
-    new NpmInstallPlugin(),
-  ],
-  debug,
-  bail: !final,
+    new webpack.EnvironmentPlugin(['NODE_ENV'])
+  ]
 };
 
 export default {
   ...defaults,
+  name: 'client side',
   entry: {
     client: path.join(defaults.context, 'client', 'index.js'),
-    vendor: ['react', 'react-dom'],
+    vendor: ['babel-polyfill', 'react', 'react-dom'],
   },
   output: {
     libraryTarget: 'var',
@@ -45,7 +40,11 @@ export default {
     filename: final ? '[name].[hash].js' : '[name].js',
   },
   target: 'web',
-  plugins: [
+  plugins: final ? [
     ...defaults.plugins,
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
+  ] : [
+    ...defaults.plugins,
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   ],
 };

@@ -34,7 +34,7 @@ const renderHTML = context => `
     ${context.meta}
   </head>
   <body>
-    ${context.content}
+    <div id="react-root">${context.content}</div>
     <script src="/assets/vendor.js"></script>
     <script src="/assets/client.js"></script>
   </body>

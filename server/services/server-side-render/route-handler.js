@@ -1,6 +1,10 @@
+import React from 'react';
+import {renderToString} from 'react-dom/server';
+import {Intro} from '../../../common/routes';
 import ssrTemplate from './template';
 
-export default options => async function ssrRouteHandler(context, next) {
+export default (options = {}) => async function ssrRouteHandler(context, next) {
+  // TODO: extract as private function
   if (!options.language || !('string' === typeof options.language)) {
     options.language = context.state.language;
     context.set('Content-Language', context.state.language);
@@ -10,6 +14,11 @@ export default options => async function ssrRouteHandler(context, next) {
 
   options.name = options.name || context.app.name;
   options.compact = options.compact || 'production' === context.app.env;
+
+  // TODO: better way or place to get/set user-agent?
+  options.content = renderToString(
+    <Intro radiumConfig={{userAgent: context.headers['user-agent']}}/>
+  );
 
   context.body = ssrTemplate(options);
   await next();
