@@ -3,12 +3,12 @@ import extractLanguage from '../services/extract-language';
 import {ssrRouteHandler} from '../services/server-side-render';
 import React from 'react';
 import {renderToString, renderToStaticMarkup} from 'react-dom/server'; // eslint-disable-line
-import App from '../../common/App';
+import {Intro} from '../../common/routes';
 
 const router = new Router();
 const ssr = ssrRouteHandler({
   // content: renderToStaticMarkup(<App name="Univera"/>)
-  content: `<div id="react-root">${renderToString(<App name="Univera"/>)}</div>`
+  content: `<div id="react-root">${renderToString(<Intro/>)}</div>`
 });
 
 router.get('ssr', '/');
