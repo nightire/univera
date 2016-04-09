@@ -11,7 +11,10 @@ if ('production' != server.env) {
   const webpackConfig = require('../config/webpack.babel');
   const compiler = require('webpack')(webpackConfig);
   const {publicPath} = webpackConfig.output;
-  server.use(require('./services/webpack')(compiler, publicPath));
+  const koaWebpack = require('./services/webpack');
+
+  server.use(koaWebpack.webpackDevMiddleware(compiler, publicPath));
+  server.use(koaWebpack.webpackHotMiddleware(compiler));
 
   require('dns').lookup(
     require('os').hostname(), (err, address) => {server.address = address}

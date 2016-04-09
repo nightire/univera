@@ -5,9 +5,8 @@ const final = 'production' == process.env.NODE_ENV;
 
 const defaults = {
   context: process.cwd(),
-  bail: !final,
   debug: !final,
-  devtool: final ? '#srouce-map' : '#cheap-module-inline-source-map',
+  devtool: final ? '#source-map' : '#cheap-module-inline-source-map',
   module: {
     preLoaders: [
       {test: /\.jsx?$/, include: /client|common/, loader: 'eslint'},
@@ -22,7 +21,10 @@ const defaults = {
     extensions: ['', '.js', '.json', '.jsx'],
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['NODE_ENV'])
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
   ],
   postcss: webpack => [
     require('postcss-import')({addDependencyTo: webpack}),
@@ -35,7 +37,12 @@ export default {
   ...defaults,
   name: 'client side',
   entry: {
-    client: path.join(defaults.context, 'client', 'index.js'),
+    client: final ? [
+      path.join(defaults.context, 'client', 'index.js'),
+    ] : [
+      path.join(defaults.context, 'client', 'index.js'),
+      `webpack-hot-middleware/client?noInfo=true&quiet=true&timeout=60000`,
+    ],
     vendor: ['babel-polyfill', 'react', 'react-dom'],
   },
   output: {

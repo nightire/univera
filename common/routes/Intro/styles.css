@@ -6,7 +6,7 @@
 
 .full-cover {
   composes: absolute-full from '../../styles/helpers.css';
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, black),
+  background: linear-gradient(to bottom, transparent 40%, black),
               url(/assets/images/intro-background-full.png)
               center / cover no-repeat fixed;
 
@@ -16,7 +16,7 @@
     width: 100%;
     height: 50%;
     padding: 4.5em 1.5em 1.5em;
-    color: white;
+    color: lightgray;
   }
 
   & header {

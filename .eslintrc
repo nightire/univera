@@ -19,6 +19,7 @@ rules:
   comma-dangle: [warn, only-multiline]
   comma-spacing: [warn, {before: false, after: true}]
   comma-style: [warn, last, {exceptions: {VariableDeclaration: true}}]
+  semi: [error, always, {omitLastInOneLineBlock: true}]
 
   react/display-name: off
   react/prop-types: off
