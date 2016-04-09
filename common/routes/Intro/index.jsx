@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
-import Radium, {Style} from 'radium';
-import {globalStyles} from '../../styles';
-import styles from './styles';
+import styles from './styles.css';
 
-class Intro extends Component {
+export default class Intro extends Component {
   render() {
     return <main>
-      <Style rules={globalStyles}/>
-
-      <section className="full-cover">
-        <Style scopeSelector=".full-cover" rules={styles}/>
-
+      <section className={styles['full-cover']}>
         <article>
           <header>
             <h1>Leica Deals Survey</h1>
@@ -18,9 +12,9 @@ class Intro extends Component {
 
           <content>
             <p>Dear Leica fan,</p>
-            <p>thanks for helping us to improve Leica Deals!
-              We have 14 questions, the survey shouldn't take more than 5 minutes
-              to answer.</p>
+            <p>Thanks for helping us to improve Leica Deals!  We have 14
+              questions, the survey shouldn't take more than 5 minutes to
+              answer.</p>
             <p>Thanks in advance!</p>
             <p>Andreas</p>
 
@@ -31,5 +25,3 @@ class Intro extends Component {
     </main>;
   }
 }
-
-export default Radium(Intro);

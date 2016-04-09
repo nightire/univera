@@ -1,3 +1,5 @@
+import 'css-modules-require-hook/preset';
+
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {Intro} from '../../../common/routes';
@@ -16,9 +18,7 @@ export default (options = {}) => async function ssrRouteHandler(context, next) {
   options.compact = options.compact || 'production' === context.app.env;
 
   // TODO: better way or place to get/set user-agent?
-  options.content = renderToString(
-    <Intro radiumConfig={{userAgent: context.headers['user-agent']}}/>
-  );
+  options.content = renderToString(<Intro/>);
 
   context.body = ssrTemplate(options);
   await next();

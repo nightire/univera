@@ -1,7 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const debug = 'debug' == process.env.NODE_ENV;
 const final = 'production' == process.env.NODE_ENV;
 
 const defaults = {
@@ -15,6 +14,7 @@ const defaults = {
     ],
     loaders: [
       {test: /\.jsx?$/, include: /client|common/, loader: 'babel?cacheDirectory'},
+      {test: /\.css$/, include: /common/, loader: 'style!css?localIdentName=[name]_[local]-[hash:base64:4]&modules&importLoaders=1!postcss'},
       {test: /\.(?:gif|jpe?g|png|svg)$/, include: /public/, loader: 'file?name=images/[name].[ext]'}
     ],
   },
@@ -23,7 +23,12 @@ const defaults = {
   },
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV'])
-  ]
+  ],
+  postcss: webpack => [
+    require('postcss-import')({addDependencyTo: webpack}),
+    require('postcss-url')(),
+    require('postcss-cssnext')(),
+  ],
 };
 
 export default {
