@@ -6,7 +6,7 @@ export default compiler => {
   return async function webpackHotMiddleware(context, next) {
     const hasNext = await applyMiddleware(middleware, context.req, context.res);
     hasNext && await next();
-  }
+  };
 };
 
 function applyMiddleware(middleware, req, res) {

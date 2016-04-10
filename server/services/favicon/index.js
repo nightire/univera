@@ -26,5 +26,5 @@ export default (path = resolve(DEFAULT_PATH), options = {}) => {
       context.type = 'image/x-icon';
       context.body = icon;
     }
-  }
+  };
 };
