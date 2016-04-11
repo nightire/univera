@@ -2,8 +2,10 @@ import 'css-modules-require-hook/preset';
 
 import React from 'react';
 import {renderToString} from 'react-dom/server';
-import {Intro} from '../../../common/routes';
 import ssrTemplate from './template';
+
+const {__common} = global.config;
+const {Intro} = require(`${__common}/routes`);
 
 export default (options = {}) => async function ssrRouteHandler(context, next) {
   // TODO: extract as private function
@@ -16,10 +18,8 @@ export default (options = {}) => async function ssrRouteHandler(context, next) {
 
   options.name = options.name || context.app.name;
   options.compact = options.compact || 'production' === context.app.env;
-
-  // TODO: better way or place to get/set user-agent?
   options.content = renderToString(<Intro/>);
-
   context.body = ssrTemplate(options);
+
   await next();
 };

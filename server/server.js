@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 import Koa from 'koa';
 
+const {__root, __config, __public} = global.config;
+
 const server = new Koa();
 server.port = process.env.PORT || 3000;
-server.name = process.env.NAME = require('../package.json').name;
+server.name = process.env.NAME = require(`${__root}/package.json`).name;
 
 if ('production' != server.env) {
   server.use(require('koa-logger')());
 
-  const webpackConfig = require('../config/webpack.babel');
+  const webpackConfig = require(`${__config}/webpack.babel`);
   const compiler = require('webpack')(webpackConfig);
   const {publicPath} = webpackConfig.output;
   const koaWebpack = require('./services/webpack');
@@ -46,9 +48,9 @@ server.use(require('./services/response-time')());
 
 server.use(require('koa-compress')());
 
-server.use(require('koa-static')('public', {maxage: 604800000, defer: true}));
+server.use(require('koa-static')(`${__public}`, {maxage: 604800000}));
 
-server.use(require('./services/favicon')('public/favicon.ico'));
+server.use(require('./services/favicon')(`${__public}/favicon.ico`));
 
 server.use(require('./routes'));
 

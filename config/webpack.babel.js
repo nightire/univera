@@ -1,23 +1,36 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const final = 'production' == process.env.NODE_ENV;
+const isProduction = 'production' == process.env.NODE_ENV;
 
 const defaults = {
   context: process.cwd(),
-  debug: !final,
-  devtool: final ? '#source-map' : '#cheap-module-inline-source-map',
+  debug: !isProduction,
+  devtool: isProduction ? '#source-map' : '#cheap-module-inline-source-map',
   module: {
     preLoaders: [
       {test: /\.jsx?$/, include: /client|common/, loader: 'eslint'},
     ],
-    loaders: [
-      {test: /\.jsx?$/, include: /client|common/, loader: 'babel?cacheDirectory'},
-      {test: /\.css$/, include: /common/, loader: 'style!css?localIdentName=[name]_[local]-[hash:base64:4]&modules&importLoaders=1!postcss'},
-      {test: /\.(?:gif|jpe?g|png|svg)$/, include: /public/, loader: 'file?name=images/[name].[ext]'}
-    ],
+    loaders: [{
+      test: /\.jsx?$/,
+      include: /client|common/,
+      loader: 'babel?cacheDirectory'
+    }, {
+      test: /\.(?:gif|jpe?g|png|svg)$/,
+      include: /public/,
+      loader: 'url?limit=10240&name=images/[name].[ext]'
+    }, {
+      test: /\.css$/,
+      include: /common/,
+      loaders: [
+        'style',
+        'css?localIdentName=[name]_[local]-[hash:base64:4]&modules',
+        'postcss'
+      ]
+    }],
   },
   resolve: {
+    fallback: path.resolve('public'),
     extensions: ['', '.js', '.json', '.jsx'],
   },
   plugins: [
@@ -35,24 +48,23 @@ const defaults = {
 
 export default {
   ...defaults,
-  name: 'client side',
   entry: {
-    client: final ? [
+    client: isProduction ? [
       path.join(defaults.context, 'client', 'index.js'),
     ] : [
       path.join(defaults.context, 'client', 'index.js'),
       `webpack-hot-middleware/client?noInfo=true&quiet=true&timeout=60000`,
     ],
-    vendor: ['babel-polyfill', 'react', 'react-dom'],
+    vendor: ['react', 'react-dom'],
   },
   output: {
     libraryTarget: 'var',
     path: path.join(defaults.context, 'public', 'assets'),
     publicPath: '/assets/',
-    filename: final ? '[name].[hash].js' : '[name].js',
+    filename: isProduction ? '[name].[hash].js' : '[name].js',
   },
   target: 'web',
-  plugins: final ? [
+  plugins: isProduction ? [
     ...defaults.plugins,
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
   ] : [

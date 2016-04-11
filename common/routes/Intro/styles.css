@@ -7,7 +7,7 @@
 .full-cover {
   composes: absolute-full from '../../styles/helpers.css';
   background: linear-gradient(to bottom, transparent 40%, black),
-              url(/assets/images/intro-background-full.png)
+              url("assets/images/intro-background-full.png")
               center / cover no-repeat fixed;
 
   & article {
