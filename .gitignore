@@ -2,9 +2,9 @@
 .idea/
 .imdone/
 .vscode/
-
+.nyc_output/
+coverage/
 node_modules/
 output/
 /public/assets/*.js
-
 npm-debug*

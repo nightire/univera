@@ -1,1 +1,1 @@
-# Univera - An Universal Application Architecture [![Build Status](https://travis-ci.org/very-geek/univera.svg?branch=develop)](https://travis-ci.org/very-geek/univera)
+# Univera - An Universal Application Architecture [![Build Status](https://travis-ci.org/very-geek/univera.svg?branch=develop)](https://travis-ci.org/very-geek/univera) [![Coverage Status](https://coveralls.io/repos/github/very-geek/univera/badge.svg?branch=develop)](https://coveralls.io/github/very-geek/univera?branch=develop)
