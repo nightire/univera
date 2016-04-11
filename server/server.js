@@ -34,17 +34,10 @@ if ('production' != server.env) {
     });
   });
 
-  require('dns').lookup(
-    require('os').hostname(), (err, address) => {server.address = address}
-  );
-
   require('localtunnel')(
     server.port, {subdomain: server.name}, (error, tunnel) => {
       error && console.error(error);
-
-      console.info(`💻 本地地址：http://localhost:${server.port}`);
-      console.info(`🚧 内网地址：http://${server.address}:${server.port}`);
-      console.info(`🌏 外网地址：${tunnel.url}`);
+      console.info(`🌏 外网地址：${tunnel.url}\n`);
     }
   );
 }
@@ -59,4 +52,12 @@ server.use(require('./services/favicon')('public/favicon.ico'));
 
 server.use(require('./routes'));
 
-server.listen(server.port);
+server.listen(server.port, function() {
+  console.info(`💻 本地地址：http://localhost:${server.port}`);
+  require('dns').lookup(
+    require('os').hostname(), (error, address) => {
+      error && console.error(error);
+      console.info(`🚧 内网地址：http://${address}:${server.port}`);
+    }
+  );
+});

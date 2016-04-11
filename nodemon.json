@@ -1,4 +1,3 @@
 {
-  "exec": "npm run build && devtool server --console",
   "watch": ["config", "server"]
 }
