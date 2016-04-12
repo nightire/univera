@@ -30,6 +30,7 @@ const defaults = {
     }],
   },
   resolve: {
+    // alias: {'react-router': 'rrtr'},
     fallback: path.resolve('public'),
     extensions: ['', '.js', '.json', '.jsx'],
   },
@@ -55,20 +56,22 @@ export default {
       path.join(defaults.context, 'client', 'index.js'),
       `webpack-hot-middleware/client?noInfo=true&quiet=true&timeout=60000`,
     ],
-    vendor: ['react', 'react-dom'],
+    // vendor: ['react', 'react-dom'],
   },
   output: {
     libraryTarget: 'var',
     path: path.join(defaults.context, 'public', 'assets'),
     publicPath: '/assets/',
-    filename: isProduction ? '[name].[hash].js' : '[name].js',
+    filename: isProduction ? '[name].js?[hash]' : '[name].js',
+    chunkFilename: isProduction ? '[id].chunk.js?[hash]' : '[id].chunk.js',
   },
   target: 'web',
   plugins: isProduction ? [
     ...defaults.plugins,
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor.js?[hash]'),
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
   ] : [
     ...defaults.plugins,
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor.js'),
   ],
 };
