@@ -5,6 +5,6 @@ import {ssrRouteHandler} from '../services/server-side-render';
 const router = new Router();
 const ssr = ssrRouteHandler();
 
-router.use(extractLanguage).get('ssr', '/', ssr);
+router.use(extractLanguage).get('ssr', '*', ssr);
 
 export default router.routes();

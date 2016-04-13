@@ -1,0 +1,24 @@
+@import 'common/styles/globals.css';
+
+.container {
+  height: 100%;
+  padding: 1rem;
+}
+
+.navigation {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid gray;
+
+  & :any-link {
+    color: gray;
+    text-decoration: none;
+  }
+
+  & .active {
+    font-weight: bold;
+  }
+
+  & a:not(:last-child) {
+    margin-right: 1rem;
+  }
+}

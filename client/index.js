@@ -1,12 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from 'react-router/lib/Router';
+import Provider from 'react-redux/lib/components/Provider';
 import browserHistory from 'react-router/lib/browserHistory';
-import routes from '../common/routes';
+import createStore from 'common/store';
 
-module.hot && module.hot.accept();
+const store = createStore();
+const rootElement = document.getElementById('root');
 
-ReactDOM.render(
-  <Router children={routes} history={browserHistory}/>,
-  document.getElementById('root')
-);
+function render() {
+  if (process.env.NODE_ENV !== 'production') {
+    ReactDOM.unmountComponentAtNode(rootElement);
+  }
+
+  ReactDOM.render(
+    <Provider store={store} key="provider">
+      {require('common/routes')(browserHistory)}
+    </Provider>, rootElement
+  );
+}
+
+render();
+
+module.hot && module.hot.accept('common/routes', render);

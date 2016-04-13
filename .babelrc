@@ -1,6 +1,14 @@
 {
   "presets": ["es2015", "stage-0", "react"],
-  "plugins": ["add-module-exports"],
+  "plugins": [
+    "add-module-exports",
+    [
+      "babel-plugin-module-alias", [
+        {"src": "./common", "expose": "common"},
+        {"src": "./config", "expose": "config"}
+      ]
+    ]
+  ],
   "env": {
     "test": {
       "sourceMaps": "inline"

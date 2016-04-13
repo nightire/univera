@@ -1,5 +1,14 @@
 import React from 'react';
 import Route from 'react-router/lib/Route';
-import Intro from './components/Intro';
+import Router from 'react-router/lib/Router';
+// import IndexRoute from 'react-router/lib/IndexRoute';
+import {
+  Application,
+  Animation,
+} from './ui';
 
-export default <Route path="/" component={Intro}/>;
+export default history => <Router history={history}>
+  <Route path="/" component={Application}>
+    <Route path="demo/:name" component={Animation}/>
+  </Route>
+</Router>;

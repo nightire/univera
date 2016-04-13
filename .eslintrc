@@ -12,14 +12,20 @@ env:
   es6: true
   node: true
   mocha: true
+  jquery: true
   browser: true
 plugins:
   - react
+globals:
+  Velocity: false
 rules:
   comma-dangle: [warn, only-multiline]
   comma-spacing: [warn, {before: false, after: true}]
   comma-style: [warn, last, {exceptions: {VariableDeclaration: true}}]
-  semi: [error, always, {omitLastInOneLineBlock: true}]
+  semi: [warn, always, {omitLastInOneLineBlock: true}]
+
+  no-console: warn
+  no-debugger: warn
 
   react/display-name: off
   react/prop-types: off

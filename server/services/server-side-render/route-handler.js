@@ -3,10 +3,12 @@ import 'css-modules-require-hook/preset';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import match from 'react-router/lib/match';
+import createRoutes from 'common/routes';
+import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import RouterContext from 'react-router/lib/RouterContext';
+import Provider from 'react-redux/lib/components/Provider';
+import createStore from 'common/store';
 import ssrTemplate from './template';
-
-const routes = require(`${global.config.__common}/routes`);
 
 export default (options = {}) => async function ssrRouteHandler(context, next) {
   // TODO: extract as private function
@@ -19,6 +21,7 @@ export default (options = {}) => async function ssrRouteHandler(context, next) {
   options.name = options.name || context.app.name;
   options.compact = options.compact || 'production' === context.app.env;
 
+  const routes = createRoutes(createMemoryHistory());
   match({routes, location: context.url}, processRoutes(context, options));
   await next();
 };
@@ -38,8 +41,13 @@ const processRoutes = (context, options) => {
     }
 
     if (renderProps) {
+      const store = createStore();
+      options.content = renderToString(
+        <Provider store={store} key="provider">
+          <RouterContext {...renderProps}/>
+        </Provider>
+      );
       context.status = 200;
-      options.content = renderToString(<RouterContext {...renderProps}/>);
       context.body = ssrTemplate(options);
     }
   };

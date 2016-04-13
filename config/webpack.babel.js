@@ -6,44 +6,37 @@ const isProduction = 'production' == process.env.NODE_ENV;
 const defaults = {
   context: process.cwd(),
   debug: !isProduction,
-  devtool: isProduction ? '#source-map' : '#cheap-module-inline-source-map',
+  devtool: isProduction ? 'hidden-source-map' : '#cheap-module-inline-source-map',
   module: {
-    preLoaders: [
-      {test: /\.jsx?$/, include: /client|common/, loader: 'eslint'},
-    ],
     loaders: [{
-      test: /\.jsx?$/,
-      include: /client|common/,
-      loader: 'babel?cacheDirectory'
+      test: /\.jsx?$/, include: /client|common/, loader: 'babel?cacheDirectory'
     }, {
       test: /\.(?:gif|jpe?g|png|svg)$/,
       include: /public/,
-      loader: 'url?limit=10240&name=images/[name].[ext]'
+      loader: 'url?limit=10240&name=images/[name].[ext]?[hash]',
     }, {
       test: /\.css$/,
       include: /common/,
       loaders: [
         'style',
-        'css?localIdentName=[name]_[local]-[hash:base64:4]&modules',
-        'postcss'
-      ]
+        'css?modules&localIdentName=[name]_[local]-[hash:base64:4]',
+        'postcss',
+      ],
     }],
   },
   resolve: {
-    // alias: {'react-router': 'rrtr'},
+    alias: {'common': path.resolve('common')},
     fallback: path.resolve('public'),
     extensions: ['', '.js', '.json', '.jsx'],
   },
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({'Promise': 'bluebird'}),
   ],
   postcss: webpack => [
-    require('postcss-import')({addDependencyTo: webpack}),
-    require('postcss-url')(),
-    require('postcss-cssnext')(),
+    require('postcss-import')({addDependencyTo: webpack, path: ['./']}),
+    require('postcss-cssnext')({browsers: '> 1%, last 2 versions, not ie <= 8'})
   ],
 };
 
@@ -56,7 +49,19 @@ export default {
       path.join(defaults.context, 'client', 'index.js'),
       `webpack-hot-middleware/client?noInfo=true&quiet=true&timeout=60000`,
     ],
-    // vendor: ['react', 'react-dom'],
+    vendor: [
+      'velocity-animate', 'velocity-animate/velocity.ui', 'jquery',
+      'react', 'react-dom', 'react-router', 'redux', 'react-redux'
+    ],
+  },
+  module: isProduction ? {
+    ...defaults.module
+  } : {
+    preLoaders: [{test: /\.jsx?$/, include: /client|common/, loader: 'eslint'}],
+    loaders: [
+      ...defaults.module.loaders,
+      {test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery'},
+    ]
   },
   output: {
     libraryTarget: 'var',
@@ -68,10 +73,16 @@ export default {
   target: 'web',
   plugins: isProduction ? [
     ...defaults.plugins,
-    new webpack.optimize.CommonsChunkPlugin('vendor.js?[hash]'),
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js?[hash]'),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      output: {comments: false},
+      compress: {warnings: false},
+    }),
   ] : [
     ...defaults.plugins,
-    new webpack.optimize.CommonsChunkPlugin('vendor.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
   ],
 };

@@ -5,6 +5,8 @@
 .nyc_output/
 coverage/
 node_modules/
+npm-debug*
 output/
 /public/assets/*.js
-npm-debug*
+/public/assets/*.css
+/public/assets/*.map
