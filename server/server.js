@@ -7,6 +7,8 @@ const server = new Koa();
 server.port = process.env.PORT || 3000;
 server.name = process.env.NAME = require(`${__root}/package.json`).name;
 
+server.use(require('./services/response-time')());
+
 if ('production' != server.env) {
   server.use(require('koa-logger')());
 
@@ -36,21 +38,19 @@ if ('production' != server.env) {
     });
   });
 
-  require('localtunnel')(
-    server.port, {subdomain: server.name}, (error, tunnel) => {
-      error && console.error(error);
-      console.info(`🌏 外网地址：${tunnel.url}\n`);
-    }
-  );
+  // require('localtunnel')(
+  //   server.port, {subdomain: server.name}, (error, tunnel) => {
+  //     error && console.error(error);
+  //     console.info(`🌏 外网地址：${tunnel.url}\n`);
+  //   }
+  // );
 }
-
-server.use(require('./services/response-time')());
 
 server.use(require('koa-compress')());
 
-server.use(require('koa-static')(`${__public}`, {maxage: 604800000}));
-
 server.use(require('./services/favicon')(`${__public}/favicon.ico`));
+
+server.use(require('koa-static')(`${__public}`, {maxage: 604800000}));
 
 server.use(require('./routes'));
 
