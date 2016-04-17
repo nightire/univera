@@ -12,8 +12,8 @@ export class Animation extends Component {
   triggerAnimation(event) {
     Velocity(event.currentTarget, 'transition.bounceIn')
       .then(button => Velocity(button, 'callout.flash'))
-      .then(button => Velocity(button, 'callout.tada'));
-    this.props.actions.increase(1);
+      .then(button => Velocity(button, 'callout.tada'))
+      .then(() => this.props.actions.increase(1));
   }
 
   render() {

@@ -1,8 +1,16 @@
 @import 'common/styles/globals.css';
 
+:root {
+  --cover-image: images/intro-background-full.png;
+}
+
 .container {
-  height: 100%;
   padding: 1rem;
+  /*width: width(var(--cover-image));*/
+  /*height: height(var(--cover-image));*/
+  background: resolve(var(--cover-image));
+  /*background-size: size(var(--cover-image));*/
+  /*composes: absolute-full from '../../styles/helpers.css';*/
 }
 
 .navigation {
