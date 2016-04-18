@@ -5,7 +5,7 @@ const isProduction = 'production' == process.env.NODE_ENV;
 
 const defaults = {
   context: process.cwd(),
-  devtool: isProduction ? 'hidden-source-map' : '#cheap-module-inline-source-map',
+  devtool: isProduction ? '#source-map' : 'cheap-module-inline-source-map',
   target: 'web',
   entry: {
     client: [path.resolve('client/index.js')],
@@ -38,7 +38,7 @@ const defaults = {
       include: /common/,
       loaders: [
         'style',
-        'css?modules&localIdentName=[name]_[local]-[hash:base64:4]&importLoaders=1',
+        'css?modules&localIdentName=[name]_[local]-[hash:base64:4]',
         'postcss',
       ],
     }, {test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery'}],
@@ -52,6 +52,10 @@ const defaults = {
   postcss(webpack) {
     return [
       require('postcss-import')({addDependencyTo: webpack, path: ['./']}),
+      require('postcss-clearfix')({display: 'table'}),
+      require('postcss-hexrgba'),
+      require('postcss-position'),
+      require('postcss-responsive-type'),
       require('postcss-cssnext')({
         browsers: '> 1%, last 2 versions, not ie <= 8',
       }),
@@ -61,8 +65,9 @@ const defaults = {
         loadPaths: ['assets/'],
         baseUrl: 'http://localhost:3000/',
       }),
-      require('postcss-browser-reporter'),
+      require('laggard')({opacity: false, pixrem: false, pseudo: false}),
       require('cssnano')({autoprefixer: false, safe: true}),
+      require('postcss-browser-reporter'),
     ];
   },
 };
@@ -72,7 +77,7 @@ export default {
   entry: {
     client: isProduction ? defaults.entry.client : [
       ...defaults.entry.client,
-      `webpack-hot-middleware/client?noInfo=true&quiet=true&timeout=60000`,
+      `webpack-hot-middleware/client?noInfo=true&quiet=true&reload=true`,
     ],
     vendor: isProduction ? defaults.entry.vendor : [
       ...defaults.entry.vendor, 'redux-logger',
@@ -86,7 +91,6 @@ export default {
     ...defaults.plugins,
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMaps: false,
       output: {comments: false},
       compress: {warnings: false},
     }),

@@ -4,11 +4,11 @@
 
 html, body {
   height: 100%;
+  font-size: responsive 14px 21px;
 }
 
 body {
   margin: 0;
-  font-size: 16px;
 }
 
 :global #root {

@@ -5,15 +5,17 @@
 }
 
 .container {
+  /* position: absolute 0 0; */
   padding: 1rem;
-  /*width: width(var(--cover-image));*/
-  /*height: height(var(--cover-image));*/
-  background: resolve(var(--cover-image));
-  /*background-size: size(var(--cover-image));*/
+  /* width: width(var(--cover-image)); */
+  /* height: height(var(--cover-image)); */
+  /* background: resolve(var(--cover-image)); */
+  /* background-size: size(var(--cover-image)); */
   /*composes: absolute-full from '../../styles/helpers.css';*/
 }
 
 .navigation {
+  clear: fix;
   padding-bottom: 1rem;
   border-bottom: 1px solid gray;
 
