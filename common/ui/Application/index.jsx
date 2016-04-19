@@ -20,6 +20,12 @@ export default class Application extends Component {
           >
             动画
           </Link>
+          <Link
+            to={`/questions`}
+            activeClassName={styles.active}
+          >
+            问卷
+          </Link>
         </nav>
       </header>
       <main>{this.props.children}</main>

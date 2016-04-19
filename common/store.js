@@ -4,7 +4,7 @@ import applyMiddleware from 'redux/lib/applyMiddleware';
 import middleware from './middleware';
 
 export default (initialState = {}) => {
-  const store = createStore(require('./reducers'), initialState, compose(
+  const store = createStore(require('./reducer'), initialState, compose(
     applyMiddleware(...middleware),
     (typeof window === 'object'
      && typeof window.devToolsExtension !== 'undefined'
@@ -12,8 +12,8 @@ export default (initialState = {}) => {
        ? window.devToolsExtension() : _ => _
   ));
 
-  module.hot && module.hot.accept('./reducers', function() {
-    store.replaceReducer(require('./reducers'));
+  module.hot && module.hot.accept('./reducer', function() {
+    store.replaceReducer(require('./reducer'));
   });
 
   return store;

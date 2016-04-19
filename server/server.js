@@ -6,7 +6,7 @@ const {__root, __public} = global.config;
 server.port = process.env.PORT || 3000;
 server.name = process.env.NAME = require(`${__root}/package.json`).name;
 
-server.use(require('./services/response-time')());
+server.use(require('./modules/response-time')());
 
 if ('production' != server.env) {
   server.use(require('koa-logger')());
@@ -14,7 +14,7 @@ if ('production' != server.env) {
   const webpackConfig = require('config/webpack.babel');
   const compiler = require('webpack')(webpackConfig);
   const {publicPath} = webpackConfig.output;
-  const koaWebpack = require('./services/webpack');
+  const koaWebpack = require('./modules/webpack');
 
   server.use(koaWebpack.webpackDevMiddleware(compiler, publicPath));
   server.use(koaWebpack.webpackHotMiddleware(compiler));
@@ -48,7 +48,7 @@ if ('production' != server.env) {
 
 server.use(require('koa-compress')());
 
-server.use(require('./services/favicon')(`${__public}/favicon.ico`));
+server.use(require('./modules/favicon')(`${__public}/favicon.ico`));
 
 server.use(require('koa-static')(`${__public}`, {maxage: 604800000}));
 

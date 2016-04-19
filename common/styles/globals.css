@@ -4,13 +4,9 @@
 
 html, body {
   height: 100%;
-  font-size: responsive 14px 21px;
+  font-size: responsive 16px 18px;
 }
 
 body {
   margin: 0;
-}
-
-:global #root {
-  height: 100%;
 }
