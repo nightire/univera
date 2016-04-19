@@ -7,12 +7,13 @@ server.port = process.env.PORT || 3000;
 server.name = process.env.NAME = require(`${__root}/package.json`).name;
 
 server.use(require('./services/response-time')());
+const spinner = require('ora')({text: '开始构建……', spinner: 'dots'});
 
 if ('production' != server.env) {
   server.use(require('koa-logger')());
 
   const webpackConfig = require('config/webpack.babel');
-  const compiler = require('webpack')(webpackConfig);
+  const compiler = require('webpack')(webpackConfig, () => spinner.stop());
   const {publicPath} = webpackConfig.output;
   const koaWebpack = require('./services/webpack');
 
@@ -59,5 +60,6 @@ server.listen(server.port, function() {
   require('dns').lookup(require('os').hostname(), (error, address) => {
     error && console.error(error);
     console.info(`🚧 内网地址：http://${address}:${server.port}`);
+    spinner.start();
   });
 });
