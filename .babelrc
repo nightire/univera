@@ -5,7 +5,8 @@
     [
       "babel-plugin-module-alias", [
         {"src": "./common", "expose": "common"},
-        {"src": "./config", "expose": "config"}
+        {"src": "./config", "expose": "config"},
+        {"src": "./node_modules/isomorphic-fetch", "expose": "fetch"}
       ]
     ]
   ],

@@ -7,24 +7,11 @@ export default class Application extends Component {
     return <div className={styles.container}>
       <header>
         <nav className={styles.navigation}>
-          <Link
-            to={`/`}
-            activeClassName={styles.active}
-            onlyActiveOnIndex
-          >
+          <Link to={`/`} activeClassName={styles.active} onlyActiveOnIndex>
             首页
           </Link>
-          <Link
-            to={`/demo/animation`}
-            activeClassName={styles.active}
-          >
-            动画
-          </Link>
-          <Link
-            to={`/questions`}
-            activeClassName={styles.active}
-          >
-            问卷
+          <Link to={`/people`} activeClassName={styles.active}>
+            用户
           </Link>
         </nav>
       </header>

@@ -1,0 +1,22 @@
+.people {
+  padding: 0;
+  list-style-type: none;
+}
+
+.people li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75em 0;
+  border-bottom: 1px solid lightgray;
+}
+
+.people li a {
+  font-weight: bolder;
+}
+
+.people li img {
+  display: block;
+  height: 2em;
+  width: 2em;
+}

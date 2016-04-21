@@ -10,6 +10,7 @@ const defaults = {
   entry: {
     client: [path.resolve('client/index.js')],
     vendor: [
+      'babel-polyfill', 'isomorphic-fetch',
       'velocity-animate', 'velocity-animate/velocity.ui', 'jquery',
       'react', 'react-dom', 'react-router', 'redux', 'react-redux',
     ],
@@ -22,7 +23,7 @@ const defaults = {
     chunkFilename: isProduction ? '[id].chunk.js?[hash]' : '[id].chunk.js',
   },
   resolve: {
-    alias: {'common': path.resolve('common')},
+    alias: {'common': path.resolve('common'), 'fetch': 'isomorphic-fetch'},
     fallback: path.resolve('public'),
     extensions: ['', '.js', '.json', '.jsx'],
   },
@@ -47,7 +48,7 @@ const defaults = {
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.optimize.OccurrenceOrderPlugin(true),
     new webpack.ProvidePlugin({'Promise': 'bluebird'}),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', minChunks: 0}),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   ],
   postcss(webpack) {
     return [
