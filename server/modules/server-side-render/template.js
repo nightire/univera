@@ -36,6 +36,7 @@ const renderHTML = context => `
   </head>
   <body>
     <div id="root">${context.content}</div>
+    <script data-recycle>window.__INITIAL_STATE__ = ${context.state}</script>
     <script src="/assets/vendor.js"></script>
     <script src="/assets/client.js"></script>
   </body>

@@ -39,11 +39,13 @@ const processRoutes = (context, options) => {
 
     if (renderProps) {
       const store = createStore();
+      options.state = JSON.stringify(store.getState());
       options.content = renderToString(
         <Provider store={store} key="provider">
           <RouterContext {...renderProps}/>
         </Provider>
       );
+
       context.set('Content-Language', options.language);
       context.status = 200;
       context.body = ssrTemplate(options);
