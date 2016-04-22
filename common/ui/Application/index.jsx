@@ -10,7 +10,7 @@ export default class Application extends Component {
           <Link to={`/`} activeClassName={styles.active} onlyActiveOnIndex>
             首页
           </Link>
-          <Link to={`/people`} activeClassName={styles.active}>
+          <Link to={`/people?amount=10`} activeClassName={styles.active}>
             用户
           </Link>
         </nav>
