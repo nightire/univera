@@ -1,11 +1,10 @@
 import handleActions from 'redux-actions/lib/handleActions';
+import {
+  SEARCH_PEOPLE
+} from './actions.js';
 
 export default handleActions({
-  ['获取用户列表_成功']: {
-    next(state, action) {
-      return action.payload;
-    },
-    error() {
-    },
-  }
+  [`${SEARCH_PEOPLE}_成功`](state, action) {
+    return action.payload;
+  },
 }, []);

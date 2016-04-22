@@ -1,5 +1,5 @@
 import fetch from 'fetch';
 
-export async function fetchPeople() {
-  return (await fetch(`https://api.github.com/users`)).json();
+export async function searchPeople(endpoint) {
+  return (await fetch(endpoint)).json();
 }

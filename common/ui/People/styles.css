@@ -1,4 +1,5 @@
 .people {
+  margin-bottom: 0;
   padding: 0;
   list-style-type: none;
 }
@@ -6,17 +7,21 @@
 .people li {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: .75em 0;
-  border-bottom: 1px solid lightgray;
+  justify-content: center;
+  border-radius: .2em;
+  padding: 1em;
+  background-color: rgba(202, 32, 39, 1);
+
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
 }
 
 .people li a {
+  color: white;
   font-weight: bolder;
-}
 
-.people li img {
-  display: block;
-  height: 2em;
-  width: 2em;
+  &:any-link {
+    text-decoration: none;
+  }
 }

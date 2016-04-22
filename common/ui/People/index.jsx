@@ -6,13 +6,15 @@ import actions from './actions';
 import * as API from './api';
 import styles from './styles.css';
 
+const endpoint = `https://api.github.com/users`;
+
 export class People extends Component {
-  static fetchData({dispatch}) {
-    return dispatch(actions.getPeopleList(API.fetchPeople()));
+  static fetchData() {
+    return actions.listPeople(API.searchPeople(endpoint));
   }
 
   componentDidMount() {
-    this.props.actions.getPeopleList(API.fetchPeople());
+    this.props.actions.listPeople(API.searchPeople(endpoint));
   }
 
   render() {
@@ -24,7 +26,6 @@ export class People extends Component {
   renderPeopleList(people) {
     return people.map(person => <li key={person.id}>
       <Link to={`/people/${person.id}`}>{person.login}</Link>
-      <img src={person.avatar_url} title={person.login}/>
     </li>);
   }
 }

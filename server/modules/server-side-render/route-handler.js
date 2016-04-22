@@ -11,44 +11,48 @@ import createStore from 'common/store';
 import ssrTemplate from './template';
 
 export default (options = {}) => async function ssrRouteHandler(context, next) {
-  // TODO: extract as private function
   if (!options.language || !('string' === typeof options.language)) {
     options.language = context.state.language;
   }
+  context.set('Content-Language', options.language);
+
   options.name = options.name || context.app.name;
   options.compact = options.compact || 'production' === context.app.env;
 
   const routes = createRoutes(createMemoryHistory());
-  match({routes, location: context.url}, processRoutes(context, options));
+  await asyncMatch({routes, location: context.url}, context, options);
+  context.status = 200;
+  context.body = ssrTemplate(options);
+
   await next();
 };
 
-const processRoutes = (context, options) => {
-  // TODO: figuring out how 500 and 302 happens in react-router
-  return function(error, redirectLocation, renderProps) {
-    if (error) {
-      context.status = 500;
-      context.body = error.message;
-    }
+function asyncMatch({routes, location}, context, options) {
+  return new Promise(resolve => {
+    match({routes, location}, (error, redirectLocation, renderProps) => {
+      // TODO: figuring out how 500 and 302 happens in react-router
+      if (error) context.status = 500, context.body = error.message;
 
-    if (redirectLocation) {
-      const {pathname, search} = redirectLocation;
-      context.status = 302;
-      context.redirect(`${pathname}${search}`);
-    }
+      if (redirectLocation) {
+        const {pathname, search} = redirectLocation;
+        context.status = 302;
+        context.redirect(`${pathname}${search}`);
+      }
 
-    if (renderProps) {
-      const store = createStore();
-      options.state = JSON.stringify(store.getState());
-      options.content = renderToString(
-        <Provider store={store} key="provider">
-          <RouterContext {...renderProps}/>
-        </Provider>
-      );
-
-      context.set('Content-Language', options.language);
-      context.status = 200;
-      context.body = ssrTemplate(options);
-    }
-  };
-};
+      if (renderProps) {
+        const store = createStore();
+        resolve(Promise.all(
+          renderProps.components
+            .filter(component => component && component.fetchData)
+            .map(component => store.dispatch(component.fetchData()))
+        )
+        .then(() => options.state = JSON.stringify(store.getState()))
+        .then(() => options.content = renderToString(
+          <Provider store={store} key="provider">
+            <RouterContext {...renderProps}/>
+          </Provider>
+        )));
+      }
+    });
+  });
+}
