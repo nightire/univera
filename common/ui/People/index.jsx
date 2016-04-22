@@ -11,6 +11,7 @@ export class People extends Component {
   constructor() {
     super();
     this.state = {
+      loading: true,
       multiple: false,
       limited: null,
       selected: null,
@@ -22,10 +23,13 @@ export class People extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.listPeople(API.searchPeople(endpoint));
-    Velocity.animate(this.list.querySelectorAll('li'),
-                     'transition.expandIn',
-                     {display: null, stagger: 80});
+    this.props.actions.listPeople(API.searchPeople(endpoint))
+      .then(() => {
+        this.setState({loading: false});
+        Velocity.animate(this.list.querySelectorAll('li'),
+                         'transition.expandIn',
+                         {display: null, stagger: 80});
+      });
   }
 
   whenOptionClick(event) {
@@ -42,11 +46,18 @@ export class People extends Component {
 
   render() {
     const selectedClassName = this.state.selected ? ` ${styles.selected}` : '';
-    return <ul
-      ref={element => this.list = element}
-      className={`${styles.people + selectedClassName}`}>
-      {this.renderPeopleList(this.props.people, this.state.selected)}
-    </ul>;
+    return <section className={this.state.loading ? styles.loading : ''}>
+      <header>
+        <h3>1. Who is your code hero?</h3>
+      </header>
+
+      <ul
+        ref={element => this.list = element}
+        className={`${styles.people + selectedClassName}`}
+      >
+        {this.renderPeopleList(this.props.people, this.state.selected)}
+      </ul>
+    </section>;
   }
 
   renderPeopleList(people, selected) {
@@ -61,7 +72,12 @@ export class People extends Component {
   }
 }
 
-export default connect(
-  state => ({people: state.people.slice(0, 10)}),
-  dispatch => ({actions: bindActionCreators(actions, dispatch)})
-)(People);
+const mapStateToProps = (state, props) => ({
+  people: state.people.slice(0, props.location.query.amount),
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {actions: bindActionCreators(actions, dispatch)};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(People);

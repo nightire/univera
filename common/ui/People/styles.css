@@ -1,3 +1,7 @@
+.loading {
+  display: none;
+}
+
 .people {
   margin-bottom: 0;
   padding: 0;
