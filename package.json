@@ -59,7 +59,7 @@
     "redux": "^3.5.1",
     "redux-actions": "^0.9.1",
     "redux-promise-middleware": "^3.0.0",
-    "sequelize": "^3.21.0",
+    "sequelize": "^3.22.0",
     "velocity-animate": "^1.2.3"
   },
   "devDependencies": {
