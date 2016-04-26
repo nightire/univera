@@ -1,13 +1,17 @@
 import React from 'react';
-import {Router, Route} from 'react-router';
-// import IndexRoute from 'react-router/lib/IndexRoute';
+import {Router, Route, IndexRoute} from 'react-router';
 import {
   Application,
-  People
+  Motions,
+  MotionsList,
+  Motion,
 } from './ui';
 
 export default history => <Router history={history}>
   <Route path="/" component={Application}>
-    <Route path="people" component={People}/>
+    <Route path="motions" component={Motions}>
+      <IndexRoute component={MotionsList}/>
+      <Route path=":name" component={Motion}/>
+    </Route>
   </Route>
 </Router>;

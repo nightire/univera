@@ -10,8 +10,13 @@ export default class Application extends Component {
           <Link to={`/`} activeClassName={styles.active} onlyActiveOnIndex>
             首页
           </Link>
-          <Link to={`/people`} activeClassName={styles.active}>
-            用户
+          <Link to={{
+              pathname: `/motions`,
+              state: {enter: 'Right', leave: 'Left'}
+            }}
+            activeClassName={styles.active}
+          >
+            动效
           </Link>
         </nav>
       </header>

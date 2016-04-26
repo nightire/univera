@@ -4,6 +4,7 @@
 
 html, body {
   height: 100%;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
   font-size: responsive 16px 18px;
 }
 

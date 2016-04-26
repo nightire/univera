@@ -1,2 +1,4 @@
 export Application from './Application';
-export People from './People';
+export Motions from './Motions';
+export MotionsList from './Motions/List';
+export Motion from './Motion';

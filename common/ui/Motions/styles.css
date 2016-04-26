@@ -1,0 +1,13 @@
+.motions {
+  position: relative;
+  padding-top: 1rem;
+  composes: reset-list from '../../styles/helpers.css';
+}
+
+.motions content {
+  position: absolute;
+  border-radius: .1rem;
+  box-shadow: 0 0 .1rem 0 color(lightgray);
+  padding: 0 1rem 1rem;
+  width: 100%;
+}
