@@ -1,3 +1,7 @@
+import 'ScrollMagic';
+import 'debug.addIndicators';
+import 'ScrollMagic.velocity';
+
 Velocity.RegisterEffect('cform.standOut', {
   defaultDuration: 300,
   calls: [
