@@ -1,6 +1,9 @@
 import 'ScrollMagic';
-import 'debug.addIndicators';
 import 'ScrollMagic.velocity';
+
+if ('production' !== process.env.NODE_ENV) {
+  require('debug.addIndicators');
+}
 
 Velocity.RegisterEffect('cform.standOut', {
   defaultDuration: 300,

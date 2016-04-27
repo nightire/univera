@@ -58,7 +58,10 @@ const defaults = {
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.ProvidePlugin({'Promise': 'bluebird'}),
+    new webpack.ProvidePlugin({
+      'Promise': 'bluebird',
+      'IScroll': 'iscroll/build/iscroll-probe'
+    }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   ],
   postcss(webpack) {

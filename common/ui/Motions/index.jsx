@@ -2,16 +2,7 @@ import React, {Component} from 'react';
 import {VelocityTransitionGroup} from 'velocity-react';
 import styles from './styles.css';
 
-
 export default class Motions extends Component {
-  componentDidMount() {
-    this.controller = new ScrollMagic.Controller({
-      addIndicators: true
-    });
-
-    new ScrollMagic.Scene().addTo(this.controller);
-  }
-
   render() {
     /**
      * NOTE: the OR condition is only for SSR bootup process, because on

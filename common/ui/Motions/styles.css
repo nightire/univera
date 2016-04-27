@@ -1,13 +1,38 @@
 .motions {
-  position: relative;
-  composes: reset-list from '../../styles/helpers.css';
+  composes: reset-list motion-container from '../../styles/helpers.css';
 }
 
 .motions content {
-  position: absolute auto;
+  padding-top: 1rem;
+}
+
+.motions h3 {
+  margin: 0 auto 1rem;
+}
+
+.motion {
   border-radius: .1rem;
-  box-shadow: 0 0 .1rem 0 color(lightgray);
-  margin-top: 1rem;
-  padding: 0 1rem 1rem;
   width: 100%;
+  height: 684px;
+  overflow-y: scroll;
+}
+
+.motion .back {
+  position: absolute;
+}
+
+.motion h3, .motion figcaption {
+  text-align: center;
+}
+
+.motion figure {
+  padding: 1rem 3rem;
+}
+
+.motion img {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
