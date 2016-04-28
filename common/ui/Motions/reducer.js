@@ -3,6 +3,7 @@ import {
   FETCH_ARSENAL_TEAM,
   FETCH_ARSENAL_PLAYERS
 } from './action.js';
+import omit from 'lodash/omit';
 
 export default handleActions({
   [`${FETCH_ARSENAL_TEAM}_读取`](state) {
@@ -10,8 +11,9 @@ export default handleActions({
   },
 
   [`${FETCH_ARSENAL_TEAM}_成功`](state, {payload}) {
-    const {players, _links} = payload;
-    return {...state, loading: false, players, meta: _links};
+    const {_links} = payload;
+    const team = omit(payload, '_links');
+    return {...state, loading: false, ...team, meta: _links};
   },
 
   [`${FETCH_ARSENAL_TEAM}_失败`](state, {error}) {
@@ -32,6 +34,5 @@ export default handleActions({
 }, {
   loading: false,
   meta: {},
-  team: {},
   players: []
 });

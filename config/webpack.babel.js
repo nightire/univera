@@ -23,7 +23,14 @@ const defaults = {
     chunkFilename: isProduction ? '[id].chunk.js?[hash]' : '[id].chunk.js',
   },
   resolve: {
-    alias: {'common': path.resolve('common'), 'fetch': 'isomorphic-fetch'},
+    alias: {
+      'fetch': 'isomorphic-fetch',
+      'common': path.resolve('common'),
+      'velocity': path.resolve('node_modules/velocity-animate/velocity.js'),
+      'ScrollMagic': path.resolve('node_modules/scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
+      'debug.addIndicators': path.resolve('node_modules/scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js'),
+      'ScrollMagic.velocity': path.resolve('node_modules/scrollmagic/scrollmagic/uncompressed/plugins/animation.velocity.js'),
+    },
     fallback: path.resolve('public'),
     extensions: ['', '.js', '.json', '.jsx'],
   },
@@ -42,12 +49,19 @@ const defaults = {
         'css?modules&localIdentName=[name]_[local]-[hash:base64:4]',
         'postcss',
       ],
-    }, {test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery'}],
+    }, {
+      test: require.resolve('scrollmagic'), loader: 'expose?ScrollMagic'
+    }, {
+      test: require.resolve('jquery'), loader: 'expose?$!expose?jQuery'
+    }],
   },
   plugins: [
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.ProvidePlugin({'Promise': 'bluebird'}),
+    new webpack.ProvidePlugin({
+      'Promise': 'bluebird',
+      'IScroll': 'iscroll/build/iscroll-probe'
+    }),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
   ],
   postcss(webpack) {
