@@ -17,7 +17,10 @@ env:
 plugins:
   - react
 globals:
+  device: false
+  IScroll: false
   Velocity: false
+  ScrollMagic: false
 rules:
   comma-dangle: [warn, only-multiline]
   comma-spacing: [warn, {before: false, after: true}]

@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
+import Helmet from 'react-helmet';
 import Link from 'react-router/lib/Link';
-import styles from './styles.css';
+import './styles.css';
+
+const defaultHelmet = {
+  defaultTitle: '巧思',
+  titleTemplate: '%s - 巧思',
+  meta: [
+    {"charset": "UTF-8"},
+    {"http-equiv": "X-UA-Compatible", "content": "IE=edge, chrome=1"},
+    {"name": "viewport", "content": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"},
+  ]
+};
 
 export default class Application extends Component {
   render() {
-    return <div className={styles.container}>
+    return <div>
+      <Helmet {...defaultHelmet} title="首页"/>
       <header>
-        <nav className={styles.navigation}>
-          <Link to={`/`} activeClassName={styles.active} onlyActiveOnIndex>
+        <nav>
+          <Link to={`/`} activeClassName="active" onlyActiveOnIndex>
             首页
-          </Link>
-          <Link to={{
-              pathname: `/motions`,
-              state: {enter: 'Right', leave: 'Left'}
-            }}
-            activeClassName={styles.active}
-          >
-            动效
           </Link>
         </nav>
       </header>

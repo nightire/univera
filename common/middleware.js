@@ -3,7 +3,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 const promiseTypeSuffixes = ['读取', '成功', '失败'];
 
-export default (('production' === process.env.NODE_ENV) || global.GLOBAL) ? [
+export default (('production' === process.env.NODE_ENV) || global.global) ? [
   promiseMiddleware({promiseTypeSuffixes}),
 ] : [
   promiseMiddleware({promiseTypeSuffixes}),

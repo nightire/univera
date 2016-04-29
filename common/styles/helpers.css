@@ -4,3 +4,10 @@
   padding-left: 0;
   list-style: none;
 }
+
+.motion-container {
+  position: relative;
+  & > content {
+    position: absolute auto;
+  }
+}

@@ -6,6 +6,7 @@ import React from 'react';
 import {renderToString} from 'react-dom/server';
 import Provider from 'react-redux/lib/components/Provider';
 import RouterContext from 'react-router/lib/RouterContext';
+import Helmet from 'react-helmet';
 import ssrTemplate from './template';
 
 export default function matchAsyncPrefetch(context, options) {
@@ -41,6 +42,7 @@ export default function matchAsyncPrefetch(context, options) {
               <RouterContext {...renderProps}/>
             </Provider>
           );
+          options.head = Helmet.rewind();
           context.status = 200;
           context.body = ssrTemplate(options);
         }));
