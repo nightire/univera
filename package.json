@@ -108,7 +108,7 @@
     "postcss-position": "^0.4.0",
     "postcss-responsive-type": "^0.3.3",
     "pre-commit": "^1.1.2",
-    "react-addons-test-utils": "^15.0.1",
+    "react-addons-test-utils": "^15.0.2",
     "redux-logger": "^2.6.1",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
