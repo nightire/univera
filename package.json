@@ -103,7 +103,7 @@
     "postcss-clearfix": "^1.0.0",
     "postcss-cssnext": "^2.5.2",
     "postcss-hexrgba": "^0.2.0",
-    "postcss-import": "^8.1.0",
+    "postcss-import": "^8.1.2",
     "postcss-loader": "^0.8.2",
     "postcss-position": "^0.4.0",
     "postcss-responsive-type": "^0.3.3",
