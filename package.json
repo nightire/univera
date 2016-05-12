@@ -60,7 +60,7 @@
     "redux": "^3.5.2",
     "redux-actions": "^0.9.1",
     "redux-promise-middleware": "^3.0.0",
-    "sequelize": "^3.21.0",
+    "sequelize": "^3.23.1",
     "velocity-animate": "^1.2.3",
     "velocity-react": "^1.1.5"
   },
