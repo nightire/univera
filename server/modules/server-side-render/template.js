@@ -1,22 +1,11 @@
-/**
- * Render whatever passed in to plain HTML text as response body.
- *
- * @param {Object}  [options]
- * @param {Boolean} [options.compact] - Determine whether to return compact text
- * which all `\r\n` will be trimmed.
- * @param {String}  [options.body=''] - Usually the text from any server-side
- * rendering function such as `ReactDOMServer.renderToString()`.
- * @returns {XML|string}
- */
-export default function ssrTemplate(options) {
-  const context = Object.assign({}, {
-    compact: options.env === 'production',
-    body: ''
-  }, options);
+import {resolve} from 'path'
 
-  return context.compact
-    ? renderHTML(context).replace(/^\s+|\s*(?:\r?\n)+/gm, '')
-    : renderHTML(context).replace(/^\s+/gm, '');
+export default function ssrTemplate(options) {
+  options.assets = require(resolve('public/assets/manifest.json'))
+
+  return options.compact
+    ? renderHTML(options).replace(/^\s+|\s*(?:\r?\n)+/gm, '')
+    : renderHTML(options).replace(/^\s+/gm, '')
 }
 
 const renderHTML = context => `
@@ -29,8 +18,8 @@ const renderHTML = context => `
   <body>
     <div id="root">${context.body}</div>
     <script data-recycle>window.__INITIAL_STATE__ = ${context.state}</script>
-    <script src="/assets/vendor.js"></script>
-    <script src="/assets/client.js"></script>
+    <script src=${context.assets.vendor.js}></script>
+    <script src=${context.assets.client.js}></script>
   </body>
   </html>
-`;
+`

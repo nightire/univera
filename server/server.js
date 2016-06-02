@@ -1,63 +1,33 @@
-/* eslint-disable no-console */
-import Koa from 'koa';
+import Koa from 'koa'
+import {resolve} from 'path'
 
-const server = new Koa();
-const {__root, __public} = global.config;
-server.port = process.env.PORT || 3000;
-server.name = process.env.NAME = require(`${__root}/package.json`).name;
+const server = new Koa()
+server.port = process.env.PORT || 3000
+server.name = process.env.NAME = require(resolve('package.json'))['name']
 
-server.use(require('./modules/response-time')());
+server.use(require('koa-compress')())
+server.use(require('./modules/response-time')())
+server.use(require('./modules/favicon')(resolve('public/favicon.ico')))
 
-if ('production' != server.env) {
-  server.use(require('koa-logger')());
+if ('production' !== server.env) {
+  server.use(require('koa-logger')())
 
-  const webpackConfig = require('config/webpack.babel');
-  const compiler = require('webpack')(webpackConfig);
-  const {publicPath} = webpackConfig.output;
-  const koaWebpack = require('./modules/webpack');
+  const webpackConfig = require('config/webpack.babel')
+  const compiler = require('webpack')(webpackConfig)
+  const {publicPath} = webpackConfig.output
+  const koaWebpack = require('./modules/webpack')
 
-  server.use(koaWebpack.webpackDevMiddleware(compiler, publicPath));
-  server.use(koaWebpack.webpackHotMiddleware(compiler));
-
-  // const watcher = require('chokidar').watch(require('path').resolve());
-
-  // watcher.on('ready', function() {
-  //   watcher.on('all', function() {
-  //     console.info(`💦 从服务端清除 /server/ 模块缓存`);
-  //     Object.keys(require.cache).forEach(id => {
-  //       /[\/\\]server[\/\\]/.test(id) && delete require.cache[id];
-  //     });
-  //   });
-  // });
-
-  // compiler.plugin('done', function() {
-  //   console.info(`💦 从客户端清除 /client/ 模块缓存`);
-  //   Object.keys(require.cache).forEach(id => {
-  //     /[\/\\]client[\/\\]/.test(id) && delete require.cache[id];
-  //   });
-  // });
-
-  // TODO: figure out the best way to expose localtunnel service
-  // require('localtunnel')(
-  //   server.port, {subdomain: server.name}, (error, tunnel) => {
-  //     error && console.error(error);
-  //     console.info(`🌏 外网地址：${tunnel.url}\n`);
-  //   }
-  // );
+  server.use(koaWebpack.webpackDevMiddleware(compiler, publicPath))
+  server.use(koaWebpack.webpackHotMiddleware(compiler))
 }
 
-server.use(require('koa-compress')());
+server.use(require('./routes'))
+if ('production' === server.env) {
+  // ISSUE: What if we use Nginx as static file server?
+  server.use(require('koa-static')(resolve('public'), {gzip: true}))
+}
 
-server.use(require('./modules/favicon')(`${__public}/favicon.ico`));
-
-server.use(require('koa-static')(`${__public}`, {maxage: 604800000}));
-
-server.use(require('./routes'));
-
+/* eslint-disable no-console */
 server.listen(server.port, function() {
-  console.info(`💻 本地地址：http://localhost:${server.port}`);
-  require('dns').lookup(require('os').hostname(), (error, address) => {
-    error && console.error(error);
-    console.info(`🚧 内网地址：http://${address}:${server.port}`);
-  });
-});
+  console.info(`💻 本地地址：http://localhost:${server.port}`)
+})

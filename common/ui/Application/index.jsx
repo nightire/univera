@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import Helmet from 'react-helmet';
-import Link from 'react-router/lib/Link';
-import './styles.css';
+import React, {Component} from 'react'
+import Helmet from 'react-helmet'
+import Link from 'react-router/lib/Link'
+import './styles.css'
 
 const defaultHelmet = {
   defaultTitle: '巧思',
@@ -11,7 +11,7 @@ const defaultHelmet = {
     {"http-equiv": "X-UA-Compatible", "content": "IE=edge, chrome=1"},
     {"name": "viewport", "content": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"},
   ]
-};
+}
 
 export default class Application extends Component {
   render() {
@@ -20,11 +20,11 @@ export default class Application extends Component {
       <header>
         <nav>
           <Link to={`/`} activeClassName="active" onlyActiveOnIndex>
-            首页
+            Welcome to univera!
           </Link>
         </nav>
       </header>
       <main>{this.props.children}</main>
-    </div>;
+    </div>
   }
 }

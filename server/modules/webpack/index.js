@@ -1,2 +1,2 @@
-export webpackDevMiddleware from './dev';
-export webpackHotMiddleware from './hot';
+export webpackDevMiddleware from './dev'
+export webpackHotMiddleware from './hot'

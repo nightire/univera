@@ -1,11 +1,11 @@
-import loggerMiddleware from 'redux-logger';
-import promiseMiddleware from 'redux-promise-middleware';
+import loggerMiddleware from 'redux-logger'
+import promiseMiddleware from 'redux-promise-middleware'
 
-const promiseTypeSuffixes = ['读取', '成功', '失败'];
+const promiseTypeSuffixes = ['读取', '成功', '失败']
 
 export default (('production' === process.env.NODE_ENV) || global.global) ? [
   promiseMiddleware({promiseTypeSuffixes}),
 ] : [
   promiseMiddleware({promiseTypeSuffixes}),
   loggerMiddleware({level: 'info', duration: true})
-];
+]

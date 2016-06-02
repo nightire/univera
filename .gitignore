@@ -1,12 +1,11 @@
 .DS_Store
 .idea/
-.imdone/
-.vscode/
+
 .nyc_output/
 coverage/
-node_modules/
+
 npm-debug*
+node_modules/
+
 output/
-/public/assets/*.js
-/public/assets/*.css
-/public/assets/*.map
+public/assets/*.*
