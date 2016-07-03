@@ -97,7 +97,7 @@
     "koa-logger": "^2.0.0",
     "laggard": "^0.1.0",
     "localtunnel": "^1.8.1",
-    "nodemon": "^1.9.1",
+    "nodemon": "^1.9.2",
     "nyc": "^6.4.0",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-assets": "^4.1.0",
